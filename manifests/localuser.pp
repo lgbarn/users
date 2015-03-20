@@ -36,11 +36,11 @@
 # Copyright 2013 Your name here, unless otherwise noted.
 #
 #class users::virtual {
-define users::localuser ($uid,$gid,$realname,$pass="",$sshkey="") inherits users {
+define users::localuser ($uid,$gid,$realname,$pass="",$sshkey="") {
  
         if ( $pass != "" ) {
         user { $title:
-                ensure     =>  $localuser_ensure,
+                ensure     =>  "present",
                 uid        =>  $uid,
                 gid        =>  $gid,
                 shell      =>  "/bin/bash",
@@ -52,7 +52,7 @@ define users::localuser ($uid,$gid,$realname,$pass="",$sshkey="") inherits users
         }
         else {
         user { $title:
-                ensure     =>  $localuser_ensure,
+                ensure     =>  "present",
                 uid        =>  $uid,
                 gid        =>  $gid,
                 shell      =>  "/bin/bash",
