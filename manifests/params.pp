@@ -35,9 +35,20 @@
 #
 # Copyright 2013 Your name here, unless otherwise noted.
 #
-class users (
-  # class parameters go here
-  ) inherits users::params {
+class users::params {
+  # parameters go here
+  $localuser_ensure     = "present"
+  $localuser_uid        = undef
+  $localuser_gid        = undef
+  $localuser_shell      = "/bin/bash"
+  $localuser_home       = "/home/$title"
+  $localuser_commenit   = undef
+  $localuser_managehome = undef
+  $sshkey_ensure        = "present"
+  $sshkey_type          = "ssh-rsa"
+  $sshkey_key           = undef
+  $sshkey_user          = $title
+  $sshkey_name          = $title
 
 }
 
