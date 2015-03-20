@@ -40,36 +40,36 @@ define users::localuser ($uid,$gid,$realname,$pass="",$sshkey="") inherits users
  
         if ( $pass != "" ) {
         user { $title:
-                ensure  =>      "present",
-                uid     =>      $uid,
-                gid     =>      $gid,
-                shell   =>      "/bin/bash",
-                home    =>      "/home/$title",
-                comment =>      $realname,
-                password =>     $pass,
-                managehome =>   true,
+                ensure     =>  $localuser_ensure,
+                uid        =>  $uid,
+                gid        =>  $gid,
+                shell      =>  "/bin/bash",
+                home       =>  "/home/$title",
+                comment    =>  $realname,
+                managehome =>  true,
+                password   =>  $pass,
         }
         }
         else {
         user { $title:
-                ensure  =>      "present",
-                uid     =>      $uid,
-                gid     =>      $gid,
-                shell   =>      "/bin/bash",
-                home    =>      "/home/$title",
-                comment =>      $realname,
+                ensure     =>  $localuser_ensure,
+                uid        =>  $uid,
+                gid        =>  $gid,
+                shell      =>  "/bin/bash",
+                home       =>  "/home/$title",
+                comment    =>  $realname,
                 managehome =>   true,
         }
         }
  
         if ( $sshkey != "" ) {
          ssh_authorized_key { $title:
-                 ensure  =>      "present",
-                 type    =>      "ssh-rsa",
-                 key     =>      "$sshkey",
-                 user    =>      "$title",
-                 require =>      User["$title"],
-                 name    =>      "$title",
+                 ensure    =>  "present",
+                 type      =>  "ssh-rsa",
+                 key       =>  "$sshkey",
+                 user      =>  "$title",
+                 require   =>  User["$title"],
+                 name      =>  "$title",
          }
         }
 }
