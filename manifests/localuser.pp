@@ -36,40 +36,45 @@
 # Copyright 2013 Your name here, unless otherwise noted.
 #
 #class users::virtual {
-define users::localuser ($uid,$gid,$realname,$pass="",$sshkey="") {
+define users::localuser ($uid,$gid,$realname,$home="",$shell="/bin/bash",$pass="",$sshkey="") {
+  if ( $home != "" ) {
+    $home_dir = "/home/$title"
+  } else {
+    $home_dir = "$home"
+  }
  
-        if ( $pass != "" ) {
-        user { $title:
-                ensure     =>  "present",
-                uid        =>  $uid,
-                gid        =>  $gid,
-                shell      =>  "/bin/bash",
-                home       =>  "/home/$title",
-                comment    =>  $realname,
-                managehome =>  true,
-                password   =>  $pass,
-        }
-        }
-        else {
-        user { $title:
-                ensure     =>  "present",
-                uid        =>  $uid,
-                gid        =>  $gid,
-                shell      =>  "/bin/bash",
-                home       =>  "/home/$title",
-                comment    =>  $realname,
-                managehome =>   true,
-        }
-        }
+  if ( $pass != "" ) {
+    user { $title:
+          ensure     =>  "present",
+          uid        =>  $uid,
+          gid        =>  $gid,
+          shell      =>  $shell,
+          home       =>  $home,
+          comment    =>  $realname,
+          managehome =>  true,
+          password   =>  $pass,
+    }
+  }
+  else {
+    user { $title:
+          ensure     =>  "present",
+          uid        =>  $uid,
+          gid        =>  $gid,
+          shell      =>  $shell,
+          home       =>  $home,
+          comment    =>  $realname,
+          managehome =>   true,
+    }
+  }
  
-        if ( $sshkey != "" ) {
-         ssh_authorized_key { $title:
-                 ensure    =>  "present",
-                 type      =>  "ssh-rsa",
-                 key       =>  "$sshkey",
-                 user      =>  "$title",
-                 require   =>  User["$title"],
-                 name      =>  "$title",
-         }
-        }
+  if ( $sshkey != "" ) {
+    ssh_authorized_key { $title:
+           ensure    =>  "present",
+           type      =>  "ssh-rsa",
+           key       =>  "$sshkey",
+           user      =>  "$title",
+           require   =>  User["$title"],
+           name      =>  "$title",
+    }
+  }
 }
