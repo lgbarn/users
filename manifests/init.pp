@@ -45,7 +45,7 @@ define users (
   $uid = undef,
   $gid = undef,
   $realname = undef,
-  $home="",
+  $home="/home/$title",
   $shell="/bin/bash",
   $pass="",
   $sshkey=""
