@@ -35,9 +35,59 @@
 #
 # Copyright 2013 Your name here, unless otherwise noted.
 #
-class users (
-  # class parameters go here
-  ) inherits users::params {
+#class users (
+#  # class parameters go here
+#  ) inherits users::params {
+#
+#}
 
+define users (
+  $uid = undef,
+  $gid = undef,
+  $realname = undef,
+  $home="",
+  $shell="/bin/bash",
+  $pass="",
+  $sshkey=""
+) {
+  if ( $home != "" ) {
+    $home_dir = "/home/$title"
+  } else {
+    $home_dir = "$home"
+  }
+ 
+  if ( $pass != "" ) {
+    user { $title:
+          ensure     =>  "present",
+          uid        =>  $uid,
+          gid        =>  $gid,
+          shell      =>  $shell,
+          home       =>  $home,
+          comment    =>  $realname,
+          managehome =>  true,
+          password   =>  $pass,
+    }
+  }
+  else {
+    user { $title:
+          ensure     =>  "present",
+          uid        =>  $uid,
+          gid        =>  $gid,
+          shell      =>  $shell,
+          home       =>  $home,
+          comment    =>  $realname,
+          managehome =>   true,
+    }
+  }
+ 
+  if ( $sshkey != "" ) {
+    ssh_authorized_key { $title:
+           ensure    =>  "present",
+           type      =>  "ssh-rsa",
+           key       =>  "$sshkey",
+           user      =>  "$title",
+           require   =>  User["$title"],
+           name      =>  "$title",
+    }
+  }
 }
-
