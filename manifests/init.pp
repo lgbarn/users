@@ -42,13 +42,18 @@
 #}
 
 class users (
-  $uid = undef,
-  $gid = undef,
-  $realname = undef,
-  $home="/home/$title",
-  $shell="/bin/bash",
-  $pass="",
-  $sshkey=""
-) inherits users::vuser {
+  $vuser_ensure         = $users::params::vuser_ensure,
+  $vuser_uid            = $users::params::vuser_uid,
+  $vuser_shell          = $users::params::vuser_shell,
+  $vuser_home           = $users::params::vuser_home,
+  $vuser_comment        = $users::params::vuser_comment,
+  $vuser_managehome     = $users::params::vuser_managehome,
+  $sshkey_ensure        = $users::params::sshkey_ensure,
+  $sshkey_type          = $users::params::sshkey_type,
+  $sshkey_key           = $users::params::sshkey_key,
+  $sshkey_user          = $users::params::sshkey_user,
+  $sshkey_name          = $users::params::sshkey_name,
+
+) inherits users::params {
 
 }
