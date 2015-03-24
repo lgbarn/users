@@ -35,8 +35,24 @@
 #
 # Copyright 2013 Your name here, unless otherwise noted.
 #
-#class users::virtual {
-define users::localuser ($uid,$gid,$realname,$home="",$shell="/bin/bash",$pass="",$sshkey="") {
+#class users (
+#  # class parameters go here
+#  ) inherits users::params {
+#
+#}
+
+define users::vuser (
+  $uid = undef,
+  $gid = undef,
+  $realname = undef,
+  $home="/home/$title",
+  $shell="/bin/bash",
+  $pass="",
+  $sshkey=""
+) {
+  include users
+  include users::params
+
   if ( $home != "" ) {
     $home_dir = "/home/$title"
   } else {
