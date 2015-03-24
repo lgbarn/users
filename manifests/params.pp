@@ -37,13 +37,13 @@
 #
 class users::params {
   # parameters go here
-  $localuser_ensure     = "present"
-  $localuser_uid        = undef
-  $localuser_gid        = undef
-  $localuser_shell      = "/bin/bash"
-  $localuser_home       = "/home/$title"
-  $localuser_commenit   = undef
-  $localuser_managehome = undef
+  $vuser_ensure         = "present"
+  $vuser_uid            = undef
+  $vuser_gid            = undef
+  $vuser_shell          = "/bin/bash"
+  $vuser_home           = "/home/$title"
+  $vuser_commenit       = undef
+  $vuser_managehome     = undef
   $sshkey_ensure        = "present"
   $sshkey_type          = "ssh-rsa"
   $sshkey_key           = undef
