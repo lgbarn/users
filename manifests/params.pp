@@ -41,7 +41,7 @@ class users::params {
   $vuser_uid            = undef
   $vuser_gid            = undef
   $vuser_shell          = '/bin/bash'
-  $vuser_home           = '/home/$title'
+  $vuser_home           = "/home/${title}"
   $vuser_comment        = undef
   $vuser_managehome     = undef
   $sshkey_ensure        = 'present'

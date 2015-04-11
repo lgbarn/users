@@ -58,28 +58,33 @@ define users::vuser (
   } else {
     $home_dir = $home
   }
+  group { $gid:
+    ensure => 'present',
+  }
 
   if ( $pass != '' ) {
     user { $title:
-          ensure     =>  'present',
-          uid        =>  $uid,
-          gid        =>  $gid,
-          shell      =>  $shell,
-          home       =>  $home,
-          comment    =>  $realname,
-          managehome =>  true,
-          password   =>  $pass,
-    }
-  }
-  else {
-    user { $title:
-      ensure     =>  present,
+      ensure     =>  'present',
       uid        =>  $uid,
       gid        =>  $gid,
       shell      =>  $shell,
       home       =>  $home,
       comment    =>  $realname,
-      managehome =>   true,
+      managehome =>  true,
+      password   =>  $pass,
+      require    =>  Group[$gid],
+    }
+  }
+  else {
+    user { $title:
+      ensure     =>  'present',
+      uid        =>  $uid,
+      gid        =>  $gid,
+      shell      =>  $shell,
+      home       =>  $home,
+      comment    =>  $realname,
+      managehome =>  true,
+      require    =>  Group[$gid],
     }
   }
 
