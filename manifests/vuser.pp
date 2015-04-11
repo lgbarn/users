@@ -45,52 +45,57 @@ define users::vuser (
   $uid = undef,
   $gid = undef,
   $realname = undef,
-  $home="/home/$title",
-  $shell="/bin/bash",
-  $pass="",
-  $sshkey=""
+  $home="/home/${title}",
+  $shell='/bin/bash',
+  $pass='',
+  $sshkey=''
 ) {
   include users
   include users::params
 
-  if ( $home != "" ) {
-    $home_dir = "/home/$title"
+  if ( $home != '' ) {
+    $home_dir = "/home/${title}"
   } else {
-    $home_dir = "$home"
+    $home_dir = $home
   }
- 
-  if ( $pass != "" ) {
+  group { $gid:
+    ensure => 'present',
+  }
+
+  if ( $pass != '' ) {
     user { $title:
-          ensure     =>  "present",
-          uid        =>  $uid,
-          gid        =>  $gid,
-          shell      =>  $shell,
-          home       =>  $home,
-          comment    =>  $realname,
-          managehome =>  true,
-          password   =>  $pass,
+      ensure     =>  'present',
+      uid        =>  $uid,
+      gid        =>  $gid,
+      shell      =>  $shell,
+      home       =>  $home,
+      comment    =>  $realname,
+      managehome =>  true,
+      password   =>  $pass,
+      require    =>  Group[$gid],
     }
   }
   else {
     user { $title:
-          ensure     =>  "present",
-          uid        =>  $uid,
-          gid        =>  $gid,
-          shell      =>  $shell,
-          home       =>  $home,
-          comment    =>  $realname,
-          managehome =>   true,
+      ensure     =>  'present',
+      uid        =>  $uid,
+      gid        =>  $gid,
+      shell      =>  $shell,
+      home       =>  $home,
+      comment    =>  $realname,
+      managehome =>  true,
+      require    =>  Group[$gid],
     }
   }
- 
-  if ( $sshkey != "" ) {
+
+  if ( $sshkey != '' ) {
     ssh_authorized_key { $title:
-           ensure    =>  "present",
-           type      =>  "ssh-rsa",
-           key       =>  "$sshkey",
-           user      =>  "$title",
-           require   =>  User["$title"],
-           name      =>  "$title",
+      ensure  =>  'present',
+      type    =>  'ssh-rsa',
+      key     =>  $sshkey,
+      user    =>  $title,
+      require =>  User[$title],
+      name    =>  $title,
     }
   }
 }
