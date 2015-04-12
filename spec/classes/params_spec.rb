@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'puppetlabs_spec_helper/puppetlabs_spec_helper'
 
 describe 'users::params', :type => :class do
 
