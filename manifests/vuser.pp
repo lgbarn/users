@@ -50,16 +50,13 @@ define users::vuser (
   $pass='',
   $sshkey=''
 ) {
-  include users
-  include users::params
+#  include users
+#  include users::params
 
   if ( $home != '' ) {
     $home_dir = "/home/${title}"
   } else {
     $home_dir = $home
-  }
-  group { $gid:
-    ensure => 'present',
   }
 
   if ( $pass != '' ) {
@@ -72,7 +69,6 @@ define users::vuser (
       comment    =>  $realname,
       managehome =>  true,
       password   =>  $pass,
-      require    =>  Group[$gid],
     }
   }
   else {
@@ -84,7 +80,6 @@ define users::vuser (
       home       =>  $home,
       comment    =>  $realname,
       managehome =>  true,
-      require    =>  Group[$gid],
     }
   }
 
