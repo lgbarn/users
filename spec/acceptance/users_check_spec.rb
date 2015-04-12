@@ -7,12 +7,12 @@ describe 'users class' do
       class { 'users': }
       @users::vuser {'lgbarn':
         uid => '5000',
-        gid => 'unixadmins',
+        gid => 'users',
         realname => 'Luther Barnum',
       }
       @users::vuser {'barnuml':
         uid => '5001',
-        gid => 'unixadmins',
+        gid => 'users',
         realname => 'Luther Barnum',
         sshkey => 'QWERTYUIOPASDFGHJKLZXCVBNM'
       }
@@ -29,16 +29,13 @@ describe 'users class' do
     describe user('lgbarn') do
       it { should exist }
       it { should have_uid '5000' }
-      it { should belong_to_group 'unixadmins' }
+      it { should belong_to_group 'users' }
     end
     describe user('barnuml') do
       it { should exist }
       it { should have_uid '5001' }
-      it { should belong_to_group 'unixadmins' }
+      it { should belong_to_group 'users' }
       it { should have_authorized_key 'QWERTYUIOPASDFGHJKLZXCVBNM' }
-    end
-    describe group('unixadmins') do
-      it { should exist }
     end
   end
   
